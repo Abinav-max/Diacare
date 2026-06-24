@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About DiaCare | Scientific Details</title>
+    <meta name="description" content="Learn about gestational and type-2 diabetes risk factors and the DiaCare predictive platform.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="../static/css/style.css?v=1.2">
+    <style>
+        .about-container {
+            max-width: 900px;
+            margin: 4rem auto;
+            padding: 0 1.5rem;
+            z-index: 1;
+            position: relative;
+        }
+        .about-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .about-header h1 {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 0.5rem;
+        }
+        .about-card {
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--color-primary);
+        }
+        .about-card.secondary-accent {
+            border-left: 4px solid var(--color-secondary);
+        }
+        .about-card.danger-accent {
+            border-left: 4px solid var(--color-high);
+        }
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.25rem;
+            color: var(--color-text);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .section-title i {
+            color: var(--color-primary);
+        }
+        .about-card.secondary-accent .section-title i {
+            color: var(--color-secondary);
+        }
+        .about-card.danger-accent .section-title i {
+            color: var(--color-high);
+        }
+        .about-text {
+            color: var(--color-text-muted);
+            font-size: 1rem;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+        .about-text strong {
+            color: var(--color-text);
+        }
+        .param-list {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.25rem;
+            margin-top: 1.5rem;
+        }
+        @media (max-width: 768px) {
+            .param-list {
+                grid-template-columns: 1fr;
+            }
+        }
+        .param-item {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 1.25rem;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+        }
+        .param-name {
+            font-family: var(--font-heading);
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--color-highlight);
+            margin-bottom: 0.35rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .disclaimer-box {
+            background: rgba(239, 68, 68, 0.05);
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(239, 68, 68, 0.15);
+        }
+        .close-btn-container {
+            text-align: center;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body class="dark-mode">
+    <!-- Background Elements -->
+    <div class="app-bg-container">
+        <div class="app-bg-parallax">
+            <div class="app-bg-image"></div>
+        </div>
+        <div class="app-bg-overlay"></div>
+        <div class="bg-glow bg-glow-1"></div>
+        <div class="bg-glow bg-glow-2"></div>
+        <canvas id="bg-particles"></canvas>
+    </div>
+
+    <main class="about-container">
+        <header class="about-header">
+            <div class="logo" style="justify-content: center; margin-bottom: 1.5rem;">
+                <i class="fa-solid fa-heart-pulse logo-icon"></i>
+                <span style="font-size: 2rem;">Dia<span class="highlight">Care</span></span>
+            </div>
+            <h1>Clinical Overview & Scientific Context</h1>
+            <p style="color: var(--color-text-muted); font-size: 1.1rem;">Understanding screening parameters, diabetes pathways, and digital predictive logic.</p>
+        </header>
+
+        <!-- What is DiaCare -->
+        <section class="card about-card">
+            <h2 class="section-title">About DiaCare</h2>
+            <p class="about-text">
+                <strong>DiaCare</strong> is a supportive health screening tool designed to predict your future risk of developing <strong>Gestational Diabetes</strong> and <strong>Type 2 Diabetes</strong>.
+            </p>
+            <p class="about-text">
+                Unlike traditional tests that only measure your current blood sugar level, DiaCare uses a smart predictive model to look ahead. By checking simple demographic and vital metrics early, it helps you spot potential future risks, raise wellness awareness, and take proactive steps toward healthy living.
+            </p>
+        </section>
+
+        <!-- Diabetes Explained -->
+        <section class="card about-card secondary-accent">
+            <h2 class="section-title"><i class="fa-solid fa-heart-pulse"></i> Diabetes Mellitus & Pregnancy</h2>
+            <p class="about-text">
+                <strong>Diabetes Mellitus</strong> is a group of metabolic diseases characterized by persistent hyperglycemia (high blood sugar levels) resulting from defects in insulin secretion, insulin action, or both.
+            </p>
+            <p class="about-text">
+                <strong>1. Type-2 Diabetes:</strong> Characterized by insulin resistance, where body cells fail to respond appropriately to insulin. Over time, the pancreas cannot produce enough insulin to maintain homeostasis. It is strongly linked to genetics, physical inactivity, and obesity.
+            </p>
+            <p class="about-text">
+                <strong>2. Gestational Diabetes (GDM):</strong> Occurs during pregnancy when placenta-produced hormones block the action of maternal insulin (insulin resistance). Without sufficient compensation, blood sugar rises. Left untreated, GDM can cause macrosomia (large birth weight), neonatal hypoglycemia, pre-eclampsia, and elevates the risk of permanent Type-2 diabetes progression for the mother later in life.
+            </p>
+        </section>
+
+        <!-- Clinical Parameters -->
+        <section class="card about-card">
+            <h2 class="section-title"><i class="fa-solid fa-vial-medical"></i> Clinical Parameters Explained</h2>
+            <p class="about-text">DiaCare utilizes several clinical metrics to evaluate diabetic risk index:</p>
+            
+            <ul class="param-list">
+                <li class="param-item">
+                    <div class="param-name"><i class="fa-solid fa-droplet"></i> Plasma Glucose (2h OGTT)</div>
+                    <p class="about-text" style="font-size: 0.9rem; margin-bottom: 0;">Plasma glucose levels measured 2 hours after drinking a 75g oral glucose solution. This is a gold standard for detecting glucose intolerance and gestational stress.</p>
+                </li>
+                <li class="param-item">
+                    <div class="param-name"><i class="fa-solid fa-weight-scale"></i> Body Mass Index (BMI)</div>
+                    <p class="about-text" style="font-size: 0.9rem; margin-bottom: 0;">An index of body fat based on weight and height (kg/m²). Higher BMI is a primary physical marker for systemic insulin resistance.</p>
+                </li>
+                <li class="param-item">
+                    <div class="param-name"><i class="fa-solid fa-capsules"></i> Serum Insulin</div>
+                    <p class="about-text" style="font-size: 0.9rem; margin-bottom: 0;">Measures the concentration of active insulin in the bloodstream post-loading, providing vital indicators of pancreatic beta-cell health and compensation efficiency.</p>
+                </li>
+            </ul>
+        </section>
+
+        <!-- Scientific Disclaimer -->
+        <section class="card about-card danger-accent">
+            <h2 class="section-title" style="color: var(--color-high);"><i class="fa-solid fa-triangle-exclamation"></i> Clinical Disclaimer</h2>
+            <div class="disclaimer-box">
+                <p class="about-text" style="color: #fda4af; font-size: 0.95rem; margin-bottom: 0;">
+                    <strong>IMPORTANT:</strong> DiaCare is an experimental predictive model and statistical simulator. The predictions provided are based on general population statistics and do not constitute a medical diagnosis, clinical opinion, or therapeutic prescription. Always consult a licensed medical professional, endocrinologist, or obstetrician for diagnostic blood testing and clinical healthcare advice.
+                </p>
+            </div>
+        </section>
+
+        <div class="close-btn-container">
+            <button class="btn btn-primary" onclick="window.close();" style="border-radius: 30px; padding: 0.75rem 2rem;">
+                <i class="fa-solid fa-xmark"></i> Close Window
+            </button>
+        </div>
+    </main>
+
+    <footer class="app-footer">
+        <p>© 2026 DiaCare Clinical Solutions. Built for scientific demonstration.</p>
+    </footer>
+
+    <!-- Background Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Parallax Shift
+            const bgParallax = document.querySelector('.app-bg-parallax');
+            if (bgParallax) {
+                window.addEventListener('mousemove', (e) => {
+                    const mouseX = e.clientX / window.innerWidth - 0.5;
+                    const mouseY = e.clientY / window.innerHeight - 0.5;
+                    bgParallax.style.transform = `translate(${mouseX * -25}px, ${mouseY * -25}px)`;
+                });
+            }
+
+            // Background Particle & ECG System
+            const canvas = document.getElementById('bg-particles');
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
+                let particles = [];
+                let mouse = { x: null, y: null, radius: 120 };
+
+                // ECG Wave variables
+                let points = [];
+                let sweepX = 0;
+                const sweepSpeed = 4; // pixels per frame
+                const blankGap = 60; // gap ahead of sweep head
+                let ecgCycleTime = 0;
+                
+                // Heartbeat timing configuration
+                const heartbeatDuration = 60; // 1 second pulse at 60fps
+                const restDuration = 40;      // rest period between heartbeats
+                const totalCycle = heartbeatDuration + restDuration;
+
+                function resizeCanvas() {
+                    canvas.width = window.innerWidth;
+                    canvas.height = window.innerHeight;
+                    
+                    // Initialize points array with baseline (centered vertically)
+                    const baseline = canvas.height * 0.5;
+                    points = new Array(Math.ceil(canvas.width)).fill(baseline);
+                    
+                    initParticles();
+                }
+                window.addEventListener('resize', resizeCanvas);
+
+                window.addEventListener('mousemove', (e) => {
+                    mouse.x = e.clientX;
+                    mouse.y = e.clientY;
+                });
+                window.addEventListener('mouseleave', () => {
+                    mouse.x = null;
+                    mouse.y = null;
+                });
+
+                class Particle {
+                    constructor() {
+                        this.x = Math.random() * canvas.width;
+                        this.y = Math.random() * canvas.height;
+                        this.size = Math.random() * 4.2 + 1.2;
+                        this.speedX = Math.random() * 0.3 - 0.15;
+                        this.speedY = Math.random() * -0.4 - 0.1;
+                        this.color = Math.random() > 0.5 ? '#0ea5e9' : '#0d9488';
+                        this.alpha = Math.random() * 0.45 + 0.25;
+                        this.baseAlpha = this.alpha;
+                    }
+                    update() {
+                        this.x += this.speedX;
+                        this.y += this.speedY;
+                        if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                        if (this.y < -10) {
+                            this.y = canvas.height + 10;
+                            this.x = Math.random() * canvas.width;
+                        }
+                        if (mouse.x !== null && mouse.y !== null) {
+                            const dx = this.x - mouse.x;
+                            const dy = this.y - mouse.y;
+                            const distance = Math.sqrt(dx * dx + dy * dy);
+                            if (distance < mouse.radius) {
+                                const force = (mouse.radius - distance) / mouse.radius;
+                                this.x += (dx / distance) * force * 1.5;
+                                this.y += (dy / distance) * force * 1.5;
+                                this.alpha = Math.min(this.baseAlpha * 2.2, 0.85);
+                            } else {
+                                if (this.alpha > this.baseAlpha) this.alpha -= 0.01;
+                            }
+                        }
+                    }
+                    draw() {
+                        ctx.save();
+                        ctx.globalAlpha = this.alpha;
+                        ctx.beginPath();
+                        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                        ctx.fillStyle = this.color;
+                        
+                        ctx.shadowBlur = this.size > 2.0 ? 12 : 6;
+                        ctx.shadowColor = this.color;
+                        
+                        ctx.fill();
+                        ctx.restore();
+                    }
+                }
+
+                function initParticles() {
+                    particles = [];
+                    const count = Math.min(Math.floor((canvas.width * canvas.height) / 14000), 140);
+                    for (let i = 0; i < count; i++) particles.push(new Particle());
+                }
+
+                function getECGValue(t) {
+                    if (t >= heartbeatDuration) return 0;
+                    const percent = t / heartbeatDuration;
+                    
+                    if (percent < 0.1) {
+                        return Math.sin((percent / 0.1) * Math.PI) * 6; // P wave
+                    }
+                    if (percent < 0.18) {
+                        return 0;
+                    }
+                    if (percent < 0.22) {
+                        return -((percent - 0.18) / 0.04) * 4; // Q wave
+                    }
+                    if (percent < 0.27) {
+                        const rPercent = (percent - 0.22) / 0.05;
+                        if (rPercent < 0.5) {
+                            return -4 + (rPercent / 0.5) * 54; // R spike up
+                        } else {
+                            return 50 - ((rPercent - 0.5) / 0.5) * 65; // R spike down
+                        }
+                    }
+                    if (percent < 0.31) {
+                        const sPercent = (percent - 0.27) / 0.04;
+                        return -15 + (sPercent * 15); // S wave recovery
+                    }
+                    if (percent < 0.42) {
+                        return 0;
+                    }
+                    if (percent < 0.6) {
+                        return Math.sin(((percent - 0.42) / 0.18) * Math.PI) * 10; // T wave
+                    }
+                    return 0;
+                }
+
+                function updateECG() {
+                    const baseline = canvas.height * 0.5;
+                    for (let s = 0; s < sweepSpeed; s++) {
+                        sweepX = (sweepX + 1) % canvas.width;
+                        for (let g = 0; g < blankGap; g++) {
+                            const eraseIdx = (sweepX + g) % canvas.width;
+                            points[eraseIdx] = null;
+                        }
+                        ecgCycleTime = (ecgCycleTime + 1) % totalCycle;
+                        const ecgHeight = getECGValue(ecgCycleTime);
+                        points[sweepX] = baseline - ecgHeight;
+                    }
+                }
+
+                function drawECG() {
+                    ctx.save();
+                    ctx.shadowBlur = 10;
+                    ctx.shadowColor = '#0ea5e9';
+                    ctx.lineWidth = 2.5;
+                    
+                    const grad = ctx.createLinearGradient(0, 0, canvas.width, 0);
+                    const stopMain = sweepX / canvas.width;
+                    const stopFade = Math.max(0, (sweepX - 300) / canvas.width);
+                    const stopBright = Math.min(1, (sweepX + 5) / canvas.width);
+                    
+                    grad.addColorStop(0, 'rgba(14, 165, 233, 0.05)');
+                    if (stopFade > 0 && stopFade < 1) {
+                        grad.addColorStop(stopFade, 'rgba(14, 165, 233, 0.08)');
+                    }
+                    if (stopMain > 0 && stopMain < 1) {
+                        grad.addColorStop(stopMain, 'rgba(14, 165, 233, 0.85)');
+                    }
+                    grad.addColorStop(stopBright, 'rgba(56, 189, 248, 1)');
+                    if (stopBright < 1) {
+                        grad.addColorStop(1, 'rgba(14, 165, 233, 0.05)');
+                    }
+                    
+                    ctx.strokeStyle = grad;
+                    ctx.beginPath();
+                    let started = false;
+                    
+                    for (let i = 0; i < canvas.width; i++) {
+                        if (points[i] === null) {
+                            started = false;
+                            continue;
+                        }
+                        if (!started) {
+                            ctx.moveTo(i, points[i]);
+                            started = true;
+                        } else {
+                            ctx.lineTo(i, points[i]);
+                        }
+                    }
+                    ctx.stroke();
+                    
+                    const currentY = points[sweepX];
+                    if (currentY !== null) {
+                        ctx.beginPath();
+                        ctx.arc(sweepX, currentY, 4.5, 0, Math.PI * 2);
+                        ctx.fillStyle = '#67e8f9';
+                        ctx.shadowBlur = 15;
+                        ctx.shadowColor = '#38bdf8';
+                        ctx.fill();
+                    }
+                    ctx.restore();
+                }
+
+                function drawConstellation() {
+                    if (mouse.x === null || mouse.y === null) return;
+                    particles.forEach(p => {
+                        const dx = p.x - mouse.x;
+                        const dy = p.y - mouse.y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        if (distance < mouse.radius) {
+                            ctx.save();
+                            ctx.beginPath();
+                            ctx.moveTo(mouse.x, mouse.y);
+                            ctx.lineTo(p.x, p.y);
+                            const alpha = ((mouse.radius - distance) / mouse.radius) * 0.35;
+                            ctx.strokeStyle = p.color === '#0ea5e9' ? `rgba(14, 165, 233, ${alpha})` : `rgba(13, 148, 136, ${alpha})`;
+                            ctx.lineWidth = 1.0;
+                            ctx.shadowBlur = 4;
+                            ctx.shadowColor = p.color;
+                            ctx.stroke();
+                            ctx.restore();
+                        }
+                    });
+                }
+
+                function animate() {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    updateECG();
+                    drawECG();
+                    drawConstellation();
+                    for (let i = 0; i < particles.length; i++) {
+                        particles[i].update();
+                        particles[i].draw();
+                    }
+                    requestAnimationFrame(animate);
+                }
+
+                resizeCanvas();
+                animate();
+            }
+        });
+    </script>
+</body>
+</html>

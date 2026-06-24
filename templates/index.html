@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DiaCare | Gestational & Type 2 Diabetes Predictor</title>
+    <meta name="description" content="A premium clinical diabetes risk assessment tool using machine learning.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="../static/css/style.css?v=1.2">
+</head>
+
+<body class="dark-mode">
+    <!-- Background Elements -->
+    <div class="app-bg-container">
+        <div class="app-bg-parallax">
+            <div class="app-bg-image"></div>
+        </div>
+        <div class="app-bg-overlay"></div>
+        <div class="bg-glow bg-glow-1"></div>
+        <div class="bg-glow bg-glow-2"></div>
+        <canvas id="bg-particles"></canvas>
+    </div>
+
+    <header class="app-header">
+        <div class="logo">
+            <i class="fa-solid fa-heart-pulse logo-icon"></i>
+            <span>Dia<span class="highlight">Care</span></span>
+        </div>
+        <div class="header-actions">
+            <button id="view-history-btn" class="btn btn-secondary" title="View Screening History" style="padding: 0.5rem 1rem; font-size: 0.9rem; border-radius: 20px; display: flex; align-items: center; gap: 6px;">
+                <i class="fa-solid fa-clock-rotate-left"></i> History
+            </button>
+            <a href="/about" target="_blank" class="btn btn-secondary about-btn" title="About DiaCare & Diabetes" style="padding: 0.5rem 1rem; font-size: 0.9rem; border-radius: 20px;">
+                About
+            </a>
+            <a href="https://github.com" target="_blank" class="icon-btn" title="Documentation">
+                <i class="fa-brands fa-github"></i>
+            </a>
+        </div>
+    </header>
+
+    <main class="app-container">
+        <!-- VIEW 1: Landing / Welcome View -->
+        <section id="landing-view" class="landing-section card">
+            <div class="landing-hero">
+                <div class="pulse-icon-large">
+                    <i class="fa-solid fa-heart-pulse"></i>
+                </div>
+                <h1 class="landing-title">Welcome to <span class="highlight">DiaCare</span></h1>
+                <p class="landing-subtitle">Friendly & Supportive Future Diabetes Risk Predictor</p>
+            </div>
+
+            <p class="landing-description">
+                Most tests only show your blood sugar level <strong>right now</strong>. 
+                <br><br>
+                <span style="color: var(--color-primary); font-weight: 700; font-size: 1.15rem;">DiaCare is different.</span> 
+                Instead of just knowing your present level, it acts as a <strong>future diabetic predictor</strong> to forecast your long-term risk of developing gestational or Type 2 diabetes.
+                <br><br>
+                Screening your health metrics early gives you a friendly, supportive look ahead, so you can take simple steps to keep yourself and your family healthy.
+            </p>
+
+            <div class="landing-image-container">
+                <img src="../static/images/landing_women_health.png" alt="Women's Health Screening Logo" class="landing-blend-img">
+            </div>
+
+            <div class="landing-features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                    <h3>Friendly Screening</h3>
+                    <p>Uses supportive predictive models to analyze key physiological vitals and demographic data.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fa-solid fa-chart-line"></i></div>
+                    <h3>Simple Health Markers</h3>
+                    <p>Evaluates key indicators including glucose levels, body mass index, and insulin response.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fa-solid fa-file-medical"></i></div>
+                    <h3>Personalized Reports</h3>
+                    <p>Generates printable health summaries containing customized metric logs and actionable wellness guidance.</p>
+                </div>
+            </div>
+
+            <div class="landing-action">
+                <button id="start-assessment-btn" class="btn btn-primary btn-lg pulse-glow">
+                    Start Assessment <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- VIEW 2: Patient Name Input View -->
+        <section id="name-view" class="name-section card hidden">
+            <div class="name-header-box">
+                <div class="name-icon-box">
+                    <i class="fa-solid fa-user-doctor"></i>
+                </div>
+                <h2>Let's Get Acquainted</h2>
+                <p class="name-subtitle">To personalize your friendly wellness report, please enter your name below.</p>
+            </div>
+
+            <div class="input-group" style="max-width: 480px; margin: 2rem auto;">
+                <label for="patient-name">
+                    Your Name
+                </label>
+                <div class="input-wrapper">
+                    <i class="fa-solid fa-user input-icon"></i>
+                    <input type="text" id="patient-name" placeholder="e.g. Sarah Connor" required autocomplete="name">
+                </div>
+                <span class="error-msg" id="error-patient-name"></span>
+            </div>
+
+            <div class="form-actions" style="max-width: 480px; margin: 1.5rem auto 0 auto;">
+                <button type="button" id="name-back-btn" class="btn btn-secondary">
+                    <i class="fa-solid fa-arrow-left"></i> Back
+                </button>
+                <button type="button" id="name-continue-btn" class="btn btn-primary">
+                    Continue <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- VIEW 3: Main Assessment Form & Dashboard View (Hidden by default) -->
+        <div id="assessment-view" class="hidden">
+            <!-- Personalized Greeting Banner -->
+            <div class="welcome-banner card">
+                <div class="welcome-avatar"><i class="fa-solid fa-circle-user"></i></div>
+                <div class="welcome-text">
+                    <h3>Hello, <span id="user-greeting-name" class="highlight">Friend</span>!</h3>
+                    <p>Let's begin your screening. Please fill in your details below.</p>
+                </div>
+            </div>
+
+            <!-- Introduction Header -->
+            <section class="intro-section" style="margin-bottom: 2rem;">
+                <h1>Gestational & Type-2 Diabetes Risk Predictor</h1>
+                <p class="subtitle">A friendly screening tool that helps predict your future diabetes risk using smart health indicators, rather than just tracking your current levels.</p>
+            </section>
+
+            <div class="grid-layout">
+                <!-- Left Side: Interactive Input Wizard -->
+                <section class="card form-card">
+                    <div class="card-header">
+                        <h2><i class="fa-solid fa-file-medical"></i> Your Assessment</h2>
+                        <div class="step-indicator">
+                            <span class="step-dot active" data-step="1">1</span>
+                            <span class="step-line"></span>
+                            <span class="step-dot" data-step="2">2</span>
+                            <span class="step-line"></span>
+                            <span class="step-dot" data-step="3">3</span>
+                        </div>
+                    </div>
+
+                    <form id="predictor-form" novalidate>
+                        <!-- STEP 1: Basic & Demographic Info -->
+                        <div class="form-step active" data-step="1">
+                            <h3 class="step-title">Step 1: General & Demographic</h3>
+                            <p class="step-desc">Enter demographic and maternal metrics.</p>
+
+                            <div class="input-group">
+                                <label for="Age">
+                                    Age
+                                    <span class="info-trigger"
+                                        data-tooltip="Self-reported maternal age in years. Clinical risk increases with age."><i
+                                            class="fa-regular fa-circle-question"></i></span>
+                                </label>
+                                <div class="input-wrapper">
+                                    <i class="fa-solid fa-calendar input-icon"></i>
+                                    <input type="number" id="Age" name="Age" placeholder="e.g. 28" required min="21"
+                                        max="120" step="1">
+                                    <span class="unit">yrs</span>
+                                </div>
+                                <span class="error-msg" id="error-Age"></span>
+                            </div>
+
+                            <div class="input-group">
+                                <label for="Pregnancies">
+                                    Pregnancies
+                                    <span class="info-trigger"
+                                        data-tooltip="Number of lifetime pregnancies. Gestational history heavily impacts endocrine pathways."><i
+                                            class="fa-regular fa-circle-question"></i></span>
+                                </label>
+                                <div class="input-wrapper">
+                                    <i class="fa-solid fa-baby input-icon"></i>
+                                    <input type="number" id="Pregnancies" name="Pregnancies" placeholder="e.g. 1" required
+                                        min="0" max="20" step="1">
+                                    <span class="unit">times</span>
+                                </div>
+                                <span class="error-msg" id="error-Pregnancies"></span>
+                            </div>
+                        </div>
+
+                        <!-- STEP 2: Vital Body Metrics -->
+                        <div class="form-step" data-step="2">
+                            <h3 class="step-title">Step 2: Physiological Metrics</h3>
+                            <p class="step-desc">Provide core vitals and physical measurements.</p>
+
+                            <div class="input-group">
+                                <label for="BMI">
+                                    Body Mass Index (BMI)
+                                    <span class="info-trigger"
+                                        data-tooltip="Weight in kilograms divided by height in meters squared (kg/m²). Metric for adipose tissue concentration."><i
+                                            class="fa-regular fa-circle-question"></i></span>
+                                </label>
+                                <div class="input-wrapper">
+                                    <i class="fa-solid fa-weight-scale input-icon"></i>
+                                    <input type="number" id="BMI" name="BMI" placeholder="e.g. 26.5" required min="10"
+                                        max="70" step="0.1">
+                                    <span class="unit">kg/m²</span>
+                                </div>
+                                <span class="error-msg" id="error-BMI"></span>
+                            </div>
+
+                            <div class="input-group">
+                                <label for="BloodPressure">
+                                    Diastolic Blood Pressure
+                                    <span class="info-trigger"
+                                        data-tooltip="Resting diastolic blood pressure (mmHg). Elevate values are linked to vascular resistance."><i
+                                            class="fa-regular fa-circle-question"></i></span>
+                                </label>
+                                <div class="input-wrapper">
+                                    <i class="fa-solid fa-gauge-high input-icon"></i>
+                                    <input type="number" id="BloodPressure" name="BloodPressure" placeholder="e.g. 72"
+                                        required min="40" max="150" step="1">
+                                    <span class="unit">mmHg</span>
+                                </div>
+                                <span class="error-msg" id="error-BloodPressure"></span>
+                            </div>
+                        </div>
+
+                        <!-- STEP 3: Metabolic & Lab Tests -->
+                        <div class="form-step" data-step="3">
+                            <h3 class="step-title">Step 3: Endocrine & Metabolic</h3>
+                            <p class="step-desc">Enter biochemical laboratory test results.</p>
+
+                            <div class="input-group">
+                                <label for="Glucose">
+                                    Plasma Glucose (2h OGTT)
+                                    <span class="info-trigger"
+                                        data-tooltip="Plasma glucose concentration 2 hours after a 75g oral glucose load. Key indicator for glucose intolerance."><i
+                                            class="fa-regular fa-circle-question"></i></span>
+                                </label>
+                                <div class="input-wrapper">
+                                    <i class="fa-solid fa-droplet input-icon"></i>
+                                    <input type="number" id="Glucose" name="Glucose" placeholder="e.g. 110" required
+                                        min="50" max="300" step="1">
+                                    <span class="unit">mg/dL</span>
+                                </div>
+                                <span class="error-msg" id="error-Glucose"></span>
+                            </div>
+
+                            <div class="input-group">
+                                <label for="Insulin">
+                                    2-Hour Serum Insulin
+                                    <span class="info-trigger"
+                                        data-tooltip="2-Hour serum insulin concentration (μU/mL) post-glucose load. Measures beta-cell activity."><i
+                                            class="fa-regular fa-circle-question"></i></span>
+                                </label>
+                                <div class="input-wrapper">
+                                    <i class="fa-solid fa-capsules input-icon"></i>
+                                    <input type="number" id="Insulin" name="Insulin" placeholder="e.g. 85" required min="5"
+                                        max="900" step="1">
+                                    <span class="unit">μU/mL</span>
+                                </div>
+                                <span class="error-msg" id="error-Insulin"></span>
+                            </div>
+                        </div>
+
+                        <!-- Form Controls -->
+                        <div class="form-actions">
+                            <button type="button" id="prev-btn" class="btn btn-secondary disabled" disabled>
+                                <i class="fa-solid fa-arrow-left"></i> Back
+                            </button>
+                            <button type="button" id="next-btn" class="btn btn-primary">
+                                Next <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                            <button type="submit" id="submit-btn" class="btn btn-success hidden">
+                                Predict Risk <i class="fa-solid fa-check-double"></i>
+                            </button>
+                        </div>
+                    </form>
+                </section>
+
+                <!-- Right Side: Real-time Predictive Visualizations & Reports -->
+                <section class="card result-card">
+                    <div class="result-placeholder" id="placeholder-view">
+                        <div class="pulse-icon">
+                            <i class="fa-solid fa-heart-pulse"></i>
+                        </div>
+                        <h3>Waiting for Input</h3>
+                        <p>Fill in your measurements on the left. The machine learning model will check your health indications instantly.</p>
+                    </div>
+
+                    <div class="result-display hidden" id="results-view">
+                        <div class="card-header">
+                            <h2><i class="fa-solid fa-chart-pie"></i> Health Report</h2>
+                            <span class="timestamp" id="report-time">--:--</span>
+                        </div>
+
+                        <!-- Health Metrics Summary Logs -->
+                        <div class="patient-log-box">
+                            <h4 class="patient-log-title"><i class="fa-solid fa-clipboard-user"></i> Health Metrics Log</h4>
+                            <div class="patient-log-grid">
+                                <div class="log-item">
+                                    <span class="log-label">Name</span>
+                                    <span class="log-value" id="summary-name">--</span>
+                                </div>
+                                <div class="log-item">
+                                    <span class="log-label">Age</span>
+                                    <span class="log-value" id="summary-age">--</span>
+                                </div>
+                                <div class="log-item">
+                                    <span class="log-label">Pregnancy</span>
+                                    <span class="log-value" id="summary-pregnancies">--</span>
+                                </div>
+                                <div class="log-item">
+                                    <span class="log-label">BMI</span>
+                                    <span class="log-value" id="summary-bmi">--</span>
+                                </div>
+                                <div class="log-item">
+                                    <span class="log-label">Blood Press.</span>
+                                    <span class="log-value" id="summary-bp">--</span>
+                                </div>
+                                <div class="log-item">
+                                    <span class="log-label">Glucose</span>
+                                    <span class="log-value" id="summary-glucose">--</span>
+                                </div>
+                                <div class="log-item">
+                                    <span class="log-label">Insulin</span>
+                                    <span class="log-value" id="summary-insulin">--</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Score Gauge Container -->
+                        <div class="gauge-container">
+                            <svg class="gauge-svg" viewBox="0 0 200 200">
+                                <!-- Background track circle -->
+                                <circle class="gauge-track" cx="100" cy="100" r="80" />
+                                <!-- Filled animated circle -->
+                                <circle class="gauge-fill" id="gauge-progress-bar" cx="100" cy="100" r="80" />
+                            </svg>
+                            <div class="gauge-center">
+                                <span class="gauge-val" id="risk-pct">0%</span>
+                                <span class="gauge-lbl">Probability</span>
+                            </div>
+                        </div>
+
+                        <!-- Risk Level Badge -->
+                        <div class="risk-badge-container">
+                            <span class="risk-badge" id="risk-status">Calculating...</span>
+                        </div>
+
+                        <!-- Clinical Interpretation -->
+                        <div class="interpretation-box">
+                            <h4>Clinical Interpretation</h4>
+                            <p id="risk-interpretation">Evaluating parameters based on standard Logistic Regression weights.</p>
+                        </div>
+
+                        <!-- Feature Breakdown Metrics -->
+                        <div class="metrics-grid">
+                            <div class="metric-mini-card" id="mini-glucose">
+                                <div class="mini-meta">
+                                    <span class="mini-title">Glucose</span>
+                                    <span class="mini-val" id="m-glucose">--</span>
+                                </div>
+                                <div class="mini-status-bar">
+                                    <div class="mini-fill"></div>
+                                </div>
+                            </div>
+                            <div class="metric-mini-card" id="mini-bmi">
+                                <div class="mini-meta">
+                                    <span class="mini-title">BMI</span>
+                                    <span class="mini-val" id="m-bmi">--</span>
+                                </div>
+                                <div class="mini-status-bar">
+                                    <div class="mini-fill"></div>
+                                </div>
+                            </div>
+                            <div class="metric-mini-card" id="mini-age">
+                                <div class="mini-meta">
+                                    <span class="mini-title">Age</span>
+                                    <span class="mini-val" id="m-age">--</span>
+                                </div>
+                                <div class="mini-status-bar">
+                                    <div class="mini-fill"></div>
+                                </div>
+                            </div>
+                            <div class="metric-mini-card" id="mini-bp">
+                                <div class="mini-meta">
+                                    <span class="mini-title">Blood Press.</span>
+                                    <span class="mini-val" id="m-bp">--</span>
+                                </div>
+                                <div class="mini-status-bar">
+                                    <div class="mini-fill"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Health Recommendations Accordion -->
+                        <div class="accordion-container">
+                            <div class="accordion-item">
+                                <button class="accordion-header">
+                                    <span><i class="fa-solid fa-user-doctor"></i> Actionable Recommendations</span>
+                                    <i class="fa-solid fa-chevron-down arrow"></i>
+                                </button>
+                                <div class="accordion-content">
+                                    <ul class="rec-list" id="recommendations-list">
+                                        <li>Complete metabolic panel checkup.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary btn-block" id="download-pdf-btn" style="margin-bottom: 0.75rem; background: linear-gradient(135deg, var(--color-primary), var(--color-secondary)); border: none; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                            <i class="fa-solid fa-file-pdf"></i> Download PDF Report
+                        </button>
+                        <button class="btn btn-secondary btn-block" id="reset-btn">
+                            <i class="fa-solid fa-rotate-left"></i> Run Another Test
+                        </button>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <footer class="app-footer">
+        <p>© 2026 DiaCare Clinical Solutions. Built for scientific demonstration. Disclaimer: This model provides experimental statistical predictions and does not substitute medical diagnostics.</p>
+    </footer>
+
+    <!-- History Modal -->
+    <div id="history-modal" class="modal hidden">
+        <div class="modal-content card">
+            <div class="modal-header">
+                <h2><i class="fa-solid fa-clock-rotate-left"></i> Assessment History</h2>
+                <button id="close-history-btn" class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="history-table-container">
+                    <table class="history-table">
+                        <thead>
+                            <tr>
+                                <th>Date & Time</th>
+                                <th>Patient Name</th>
+                                <th>Age</th>
+                                <th>Glucose</th>
+                                <th>BMI</th>
+                                <th>Risk %</th>
+                                <th>Outcome</th>
+                            </tr>
+                        </thead>
+                        <tbody id="history-table-body">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+    <script src="../static/js/main.js?v=2.0"></script>
+</body>
+
+</html>
