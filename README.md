@@ -24,9 +24,38 @@ DiaCare/
 
 ## Features
 
-- **Risk Assessment Predictor:** Input patient data such as glucose level, blood pressure, BMI, age, and insulin to get immediate diabetes risk prediction.
-- **SQLite Database Integration:** Saves risk assessment histories for later review.
-- **Render Deployment Support:** Configured for seamless deployment on Render.
+### 1. Interactive Multi-Step Clinical Wizard
+* **User-Centric Progression:** Replaces complex, overwhelming clinical forms with an easy-to-use **3-Step Form Wizard** that guides the user:
+  * **Step 1: General & Demographics:** Captures maternal age (clinically significant for risk scaling) and pregnancy history.
+  * **Step 2: Vitals & Body Metrics:** Measures body mass index (BMI, $kg/m^2$) as an indicator of adipose concentration and resting diastolic blood pressure (mmHg).
+  * **Step 3: Endocrine & Lab Vitals:** Collects critical lab markers, specifically Plasma Glucose (2-hour Oral Glucose Tolerance Test - OGTT, $mg/dL$) and 2-Hour Serum Insulin ($\mu U/mL$).
+* **Real-time Tooltips & Validation:** Every input field contains custom inline tooltips explaining the clinical relevance of each metric. Frontend validation checks values instantly (e.g. valid age ranges, whole-number checks, numeric ranges) before enabling the "Next" step.
+
+### 2. Advanced Machine Learning Prediction Engine
+* **Double-layered Validation:** Input metrics are validated on both the frontend and backend to prevent execution faults.
+* **Pipeline Standardization:** The backend loads `scaler.pkl` to normalize input parameters using the exact means and standard deviations from the clinical training set, preventing feature weight bias.
+* **Logistic Regression Classifier:** Runs the normalized features through `diabetes_model.pkl` to determine:
+  * **Prediction Outcome:** A binary prediction (`0` for low risk, `1` for high risk).
+  * **Statistical Risk Probability:** A continuous probability percentage (0% to 100%) indicating how close the patient is to the classification threshold.
+
+### 3. Real-Time Interactive Reporting Dashboard
+* **Dynamic SVG Progress Gauge:** Features a custom circular SVG radial gauge that animates up to the exact calculated risk percentage dynamically.
+* **Risk Categorization Badge:** Changes colors and labels dynamically based on the model's output (Low Risk vs. High Risk).
+* **Vitals Highlight Bar Charts:** Displays mini status-bars breaking down individual parameters (Age, Glucose, BMI, Blood Pressure) against clinical thresholds to show which features contributed most to the score.
+* **Accordion Recommendations:** Generates customized clinical and dietary advice depending on the calculated risk tier (e.g., advising complete metabolic panels, regular physical activity, or consultation details).
+
+### 4. Instant PDF Health Report Generation
+* **Client-Side Document Assembly:** Integrates `jspdf` and `jspdf-autotable` libraries directly into the client.
+* **Custom Clinical Layout:** Generates a structured PDF document that includes the patient's name, clinical vitals log, risk status, model probability, and recommended wellness guidelines.
+* **Ready to Print/Save:** Features a one-click **"Download PDF Report"** button to export reports instantly without server-side PDF overhead.
+
+### 5. Persistent SQLite Assessment Log & History Modal
+* **Automatic Database Syncing:** Upon successful risk assessment, the backend records all clinical details (name, vitals, risk probability, classification, and UTC timestamp) to `diabetes.db`.
+* **History Modal Viewer:** Users can toggle a historic database panel showing a tabular view of all past assessments, allowing clinicians to review trend histories.
+
+### 6. Premium Responsive UI Design System
+* **Atmospheric Styling:** Tailored stylesheet (`style.css`) using modern typography (Outfit and Inter google fonts) and custom CSS variables.
+* **Dark Mode & Particle Effects:** Features a sleek default dark theme with animated CSS glow effects, a smooth parallax background image, and a dynamic HTML5 Canvas particle network (`canvas id="bg-particles"`) running in the background.
 
 ## Local Setup & Development
 
@@ -53,10 +82,11 @@ DiaCare/
    ```
    Open `http://localhost:5000` in your web browser.
 
-## Deployment on Render
+## Deployment Instructions
 
-This repository is optimized for [Render](https://render.com).
-- **Service Type:** Web Service
-- **Environment:** Python
-- **Build Command:** `pip install -r requirements.txt`
-- **Start Command:** `gunicorn app:app` (You may need to add `gunicorn` to `requirements.txt` if using it on Render)
+This application is production-ready and can be deployed to any cloud platform supporting Python/Flask services.
+
+### Requirements for Production
+- **Web Server:** A WSGI server such as `gunicorn` (included in `requirements.txt`) should be used to run the application in production.
+- **Command:** `gunicorn app:app`
+- **Port:** Bind to the port dynamically using the `PORT` environment variable (managed automatically in `app.py`).
